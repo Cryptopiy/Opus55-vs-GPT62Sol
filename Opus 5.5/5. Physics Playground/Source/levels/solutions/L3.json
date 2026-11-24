@@ -1,0 +1,6 @@
+{"level": "L3", "objects": [
+  {"type": "lever", "x": -9.75, "y": 2.25, "rot": -35, "fulcrum": -1.0},
+  {"type": "box_h", "x": -11.25, "y": 10.0, "rot": 0},
+  {"type": "box_h", "x": -11.25, "y": 11.0, "rot": 0},
+  {"type": "plank", "x": -5.25, "y": 1.0, "rot": 30}
+]}

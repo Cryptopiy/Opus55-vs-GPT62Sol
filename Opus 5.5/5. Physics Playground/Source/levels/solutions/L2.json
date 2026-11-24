@@ -1,0 +1,4 @@
+{"level": "L2", "objects": [
+  {"type": "rope", "x": -9.5, "y": 12.5, "rot": -75, "length": 3.75},
+  {"type": "plank", "x": 3.0, "y": 5.75, "rot": 5}
+]}

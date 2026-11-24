@@ -1,0 +1,4 @@
+[
+  {"type":"plank","position":[-6.5,6.5],"rotation":-15,"parameters":{}},
+  {"type":"spring","position":[-4,5.75],"rotation":-30,"parameters":{}}
+]

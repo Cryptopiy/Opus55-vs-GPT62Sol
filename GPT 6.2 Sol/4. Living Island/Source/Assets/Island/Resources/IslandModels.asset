@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78171d4b27bdf1a4db9dfd37ec9626e5, type: 3}
+  m_Name: IslandModels
+  m_EditorClassIdentifier: Assembly-CSharp::IslandModels
+  lighthouse: {fileID: -9198080817946727990, guid: 8130d1f689d2f044abdfeea9c2e4de46, type: 3}
+  rowboat: {fileID: 3619987727251584565, guid: 9213069c2aee97040b03a71df52b2053, type: 3}
+  driftwood: {fileID: 1213059920124463260, guid: 3f64cf312e8e5324eb45884c9b7d0a3b, type: 3}
+  palms:
+  - {fileID: 3521636799876295140, guid: d586094a69400314cbfb36116f397ef0, type: 3}
+  - {fileID: -2876131624669400545, guid: 55279fc8f0b29d8498d5b7511979025d, type: 3}
+  - {fileID: 3776891344386178059, guid: 2946d9fecd536cb4591e2583433ee55e, type: 3}
+  rocks:
+  - {fileID: -1202973792343878038, guid: c7a0793a18633cd45882a5b0862458f2, type: 3}
+  - {fileID: 7226390595516281988, guid: 63c26d89bc4f3274eba6beb2706b97b6, type: 3}
+  - {fileID: -1559414285600668236, guid: e66e8d8194ceb9340ad1debcbd8e97e4, type: 3}
+  - {fileID: 3588999710303330875, guid: baf5ccaf5785c5f4c9e23c2c8a7a7e34, type: 3}
+  - {fileID: -8995008217443996972, guid: 88af5162810fd6246b4330dd71f876e8, type: 3}

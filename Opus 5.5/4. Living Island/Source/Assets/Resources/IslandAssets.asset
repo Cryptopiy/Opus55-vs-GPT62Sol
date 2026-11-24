@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d759b020182f4514bb3fa65ff73c55f6, type: 3}
+  m_Name: IslandAssets
+  m_EditorClassIdentifier: Assembly-CSharp::LivingIsland.IslandAssets
+  terrainShader: {fileID: 4800000, guid: 7c93c3e81ea131e42afc5eeb2041386c, type: 3}
+  waterShader: {fileID: 4800000, guid: 97e44d6bf7f92a84494c6871a5eba544, type: 3}
+  skyShader: {fileID: 4800000, guid: 6a707d20e4527cf4a8c2917806297f90, type: 3}
+  skyCubeShader: {fileID: 4800000, guid: 862b0bb5e253dd94682569f9587a86ea, type: 3}
+  grassShader: {fileID: 4800000, guid: 54def71d5cd8ad94d9b30cd81e98d72d, type: 3}
+  barkShader: {fileID: 4800000, guid: 04d893d0b1024734180629466be28ec2, type: 3}
+  foliageShader: {fileID: 4800000, guid: 30c951527d9d0a949b195d8818d4d29b, type: 3}
+  rockShader: {fileID: 4800000, guid: 1f07787936e346744920301555cc262b, type: 3}
+  propShader: {fileID: 4800000, guid: b510efdda8468974d812dbd3473d41a5, type: 3}
+  glassShader: {fileID: 4800000, guid: 696f2f9441d0edd4c8a4598642ab07f6, type: 3}
+  flowerShader: {fileID: 4800000, guid: 2cccdd127c203ee4b94223460b1a6801, type: 3}
+  particleAdditiveShader: {fileID: 4800000, guid: ef765fe71f5b35e4385ee45aea298077, type: 3}
+  particleAlphaShader: {fileID: 4800000, guid: d78277ae4ffa11c47bf6be9370f49000, type: 3}
+  rainShader: {fileID: 4800000, guid: a15fc4fde70941c478f7b85081453c74, type: 3}
+  beamShader: {fileID: 4800000, guid: eabac5600238f4b4c8f4a1ff7173d914, type: 3}
+  lightningShader: {fileID: 4800000, guid: 0f9433f2a5f8ce542b8dca65cfdea79c, type: 3}
+  grassCompute: {fileID: 7200000, guid: 923ce44568b2e654ab6abb332c6c74a1, type: 3}
+  palms:
+  - {fileID: 3521636799876295140, guid: a0b8e1057f4211740af5bed2de938e0a, type: 3}
+  - {fileID: -2876131624669400545, guid: 7f654e5818a0da640a2779ebc831978b, type: 3}
+  - {fileID: 3776891344386178059, guid: bdf0cd32e5ea84f43a7d8708ff1c6078, type: 3}
+  rocks:
+  - {fileID: -1202973792343878038, guid: f816e8f8f91f6f942b50d07726f8d002, type: 3}
+  - {fileID: 7226390595516281988, guid: 92d8bb3958dfcbc46bdbbae29bb65b0d, type: 3}
+  - {fileID: -1559414285600668236, guid: 87bb86e4ea9b0de4295f58713188013d, type: 3}
+  - {fileID: 3588999710303330875, guid: ea7f0ad4dd1354b47b97e26d4eb7e8dd, type: 3}
+  - {fileID: -8995008217443996972, guid: 92acbb1fa1fc37442b3965978463ca20, type: 3}
+  lighthouse: {fileID: -9198080817946727990, guid: 32a5f6136e9c58544b32d7a263613d0e, type: 3}
+  rowboat: {fileID: 3619987727251584565, guid: 260a9be7eb724e540bcb24ca2ea1f204, type: 3}
+  driftwood: {fileID: 1213059920124463260, guid: a2ced96d1bae51547bfbb31af7cea2ac, type: 3}
+  campfireLogs: {fileID: 8390282755710884932, guid: fef229a38a3e2fd4ab6baf6c9d46de00, type: 3}

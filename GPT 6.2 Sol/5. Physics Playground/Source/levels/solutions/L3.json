@@ -1,0 +1,5 @@
+[
+  {"type":"lever","position":[-8.75,1.25],"rotation":-20,"parameters":{}},
+  {"type":"box_h","position":[-11,18.5],"rotation":0,"parameters":{}},
+  {"type":"plank","position":[-4.75,0.25],"rotation":0,"parameters":{}}
+]

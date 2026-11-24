@@ -1,0 +1,12 @@
+SHA-256 of every game archive (Get-FileHash <file> -Algorithm SHA256)
+
+b6521f403f596989da060ff9b57171b378ae77a45556fde4460196df4092b386  GPT 6.2 Sol/1. Destruction Sandbox/DestructionRange.zip
+b3dfae22b137f21cb45cc7c18431b1c8d9e8db6660abbc1fa777e52a3d90d713  GPT 6.2 Sol/2. Drift Racer/DriftRacer.zip
+e0414b8ca797ff7dcf7a116be7e159dab4ee74bb1b85a8fef7e7e4945de25445  GPT 6.2 Sol/3. Wave Survival/Bastion.zip
+761afd647d1f469a1a3d1efe34e4afc9d29862900f1656c96a889c2d52152d13  GPT 6.2 Sol/4. Living Island/IslandValidation.zip
+4b19d96a04970ccc6f5ebda4228471b8d97a6924c4752b032443c37bbcef8f88  GPT 6.2 Sol/5. Physics Playground/ContraptionLab.zip
+637ada5ee4dfc939c06e32eec2ae4697b9292bc3a4ffda61fbca65f64f3482e6  Opus 5.5/1. Destruction Sandbox/DestructionSandbox.zip
+6a78ce1413a81c0babcb21d7febcc898d1a9f3a5ecaceb8e5dcbb96a0bd0416c  Opus 5.5/2. Drift Racer/DriftRacer.zip
+f80f1c1af54f614457203cfc0a033c87e780d19c7744a71622af4a6d1cf78c50  Opus 5.5/3. Wave Survival/WaveSurvival.zip
+c8a9d5d6b5ebc5aabb0da2bbe3f40a0d302d8bdcfe74d51e1f19bd95668a4adb  Opus 5.5/4. Living Island/LivingIsland.zip
+f9c0f60f925268ec21a9de52dd1a5eba84aacaf7217279e6f654262d6dad8a85  Opus 5.5/5. Physics Playground/ContraptionLab.zip

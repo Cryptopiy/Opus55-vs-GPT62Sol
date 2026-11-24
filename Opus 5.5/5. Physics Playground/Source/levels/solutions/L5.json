@@ -1,0 +1,6 @@
+{"level": "L5", "objects": [
+  {"type": "box_s", "x": 3.0, "y": 1.5, "rot": 0},
+  {"type": "conveyor", "x": -5.5, "y": 7.75, "rot": 0},
+  {"type": "plank", "x": -2.0, "y": 6.75, "rot": -15},
+  {"type": "plank", "x": 1.5, "y": 3.75, "rot": -10}
+]}

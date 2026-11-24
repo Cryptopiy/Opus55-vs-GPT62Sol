@@ -1,0 +1,122 @@
+// GPU grass placement around the camera (I-10).
+// A world-anchored candidate grid (0.17 m cells, 80 m radius) is evaluated every frame:
+//   CSMeasure  : sums the "wanted" density (grass mask x distance falloff) over all candidate cells
+//   CSFinalize : derives a smoothed density scale so the instance count lands on the quality budget
+//   CSPlace    : keeps a cell if its stable hash rank is below mask x falloff x scale, appends the blade
+//   CSArgs     : resets the density sum and publishes the count for the CPU read-back
+// The blades are appended to an AppendStructuredBuffer; GraphicsBuffer.CopyCount then writes the instance
+// count straight into the indirect arguments of Graphics.RenderMeshIndirect.
+// Cells are hashed by their world coordinates, so blades never swim when the camera moves, and blades
+// near the keep threshold shrink smoothly instead of popping.
+#pragma kernel CSMeasure
+#pragma kernel CSFinalize
+#pragma kernel CSPlace
+#pragma kernel CSArgs
+
+#include "Include/TerrainCommon.hlsl"
+
+struct GrassInstance
+{
+    float4 posYaw;   // xyz = root position, w = yaw (radians)
+    float4 shape;    // x = height, y = width, z = colour variation, w = phase
+};
+
+AppendStructuredBuffer<GrassInstance> _GrassInstances;
+RWStructuredBuffer<uint> _GrassCounter;   // [0] placed this frame, [1] wanted density sum (x64 fixed point), [2] last count
+RWStructuredBuffer<float> _GrassState;    // [0] smoothed density scale
+
+float4 _GrassCameraPos;   // xz = field centre
+float4 _GrassParams;      // x = cell size, y = grid dimension, z = cull distance, w = budget (blades)
+float4 _GrassParams2;     // x = full-density radius, y = min relative density, z = smoothing factor, w = capacity
+float4 _GrassExclusions[4]; // xz centre, w radius (lighthouse / campfire pads)
+uint _GrassSeed;
+
+float DensityFalloff(float r)
+{
+    float fullR = _GrassParams2.x;
+    float f = r <= fullR ? 1.0 : pow(saturate(fullR / max(r, 1e-3)), 1.35);
+    f = max(f, _GrassParams2.y);
+    // Fade to zero over the last 6 m before the cull distance.
+    return f * saturate((_GrassParams.z - r) / 6.0);
+}
+
+bool CellCandidate(uint2 id, out float2 xz, out int2 cell, out float r)
+{
+    float cellSize = _GrassParams.x;
+    int half = (int)(_GrassParams.y * 0.5);
+    int2 origin = (int2)floor(_GrassCameraPos.xz / cellSize);
+    cell = origin + (int2)id - half;
+    float2 jitter = float2(IslandHashCell(cell, _GrassSeed + 11u), IslandHashCell(cell, _GrassSeed + 23u));
+    xz = (cell + jitter) * cellSize;
+    r = distance(xz, _GrassCameraPos.xz);
+    if (r > _GrassParams.z) return false;
+    [unroll] for (int e = 0; e < 4; e++)
+        if (distance(xz, _GrassExclusions[e].xy) < _GrassExclusions[e].w) return false;
+    return true;
+}
+
+float CellWeight(float2 xz, float r, out float3 pos)
+{
+    float h = IslandHeight(xz);
+    pos = float3(xz.x, h, xz.y);
+    if (h < _TerrainParams2.z) return 0.0;
+    float3 n = IslandNormal(xz);
+    return IslandGrassMask(pos, n) * DensityFalloff(r);
+}
+
+[numthreads(16, 16, 1)]
+void CSMeasure(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_GrassParams.y || id.y >= (uint)_GrassParams.y) return;
+    float2 xz; int2 cell; float r;
+    if (!CellCandidate(id.xy, xz, cell, r)) return;
+    float3 pos;
+    float w = CellWeight(xz, r, pos);
+    if (w > 0.0) InterlockedAdd(_GrassCounter[1], (uint)(w * 64.0));
+}
+
+[numthreads(1, 1, 1)]
+void CSFinalize(uint3 id : SV_DispatchThreadID)
+{
+    float wanted = max(_GrassCounter[1] / 64.0, 1.0);
+    float target = clamp(_GrassParams.w / wanted, 0.0, 1.0 / max(_GrassParams2.y, 0.01));
+    float s = _GrassState[0];
+    s = s <= 0.0 ? target : lerp(s, target, _GrassParams2.z);
+    _GrassState[0] = s;
+    _GrassCounter[0] = 0;
+}
+
+[numthreads(16, 16, 1)]
+void CSPlace(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_GrassParams.y || id.y >= (uint)_GrassParams.y) return;
+    float2 xz; int2 cell; float r;
+    if (!CellCandidate(id.xy, xz, cell, r)) return;
+    float3 pos;
+    float w = CellWeight(xz, r, pos);
+    float keep = w * _GrassState[0];
+    float rank = IslandHashCell(cell, _GrassSeed);
+    if (rank >= keep) return;
+
+    uint index;
+    InterlockedAdd(_GrassCounter[0], 1u, index);
+    if (index >= (uint)_GrassParams2.w) return;
+
+    float grow = saturate((keep - rank) / 0.12);                 // smooth appearance at the threshold
+    float sparse = 1.0 / sqrt(max(DensityFalloff(r) * min(_GrassState[0], 1.0), 0.05)); // thinner far grass is wider
+    float hRand = IslandHashCell(cell, _GrassSeed + 37u);
+    GrassInstance g;
+    g.posYaw = float4(pos, IslandHashCell(cell, _GrassSeed + 51u) * 6.2831853);
+    g.shape.x = _TerrainParams2.w * lerp(0.6, 1.35, hRand) * grow * lerp(1.0, 1.25, saturate(r / 60.0));
+    g.shape.y = lerp(0.8, 1.25, IslandHashCell(cell, _GrassSeed + 67u)) * min(sparse, 3.5);
+    g.shape.z = IslandHashCell(cell, _GrassSeed + 79u);
+    g.shape.w = IslandHashCell(cell, _GrassSeed + 97u);
+    _GrassInstances.Append(g);
+}
+
+[numthreads(1, 1, 1)]
+void CSArgs(uint3 id : SV_DispatchThreadID)
+{
+    _GrassCounter[1] = 0;
+    _GrassCounter[2] = min(_GrassCounter[0], (uint)_GrassParams2.w);   // stable copy for the CPU read-back
+}
